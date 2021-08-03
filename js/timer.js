@@ -42,6 +42,10 @@ const timer = {
         const time = this.targetDate - Date.now();
         const { days, hours, mins, secs } = getTimeComponent(time);
         console.log(days, ":", hours, ":", mins, ":", secs);
+        refs.days.textContent = days;
+        refs.hours.textContent = hours;
+        refs.mins.textContent = mins;
+        refs.secs.textContent = secs;
       },
       1000,
       1000
