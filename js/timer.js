@@ -34,18 +34,32 @@ const refs = {
   days: document.querySelector('span[data-value="days"]'),
 };
 
-let time = null;
+const timer = {
+  targetDate: new Date("Aug 30, 2021"),
+  start() {
+    setInterval(
+      () => {
+        const time = this.targetDate - Date.now();
+        const { days, hours, mins, secs } = getTimeComponent(time);
+        console.log(days, ":", hours, ":", mins, ":", secs);
+      },
+      1000,
+      1000
+    );
+  },
+};
 
-const targetDate = new Date("Aug 30, 2021");
-console.log(targetDate);
+timer.start();
 
-setInterval(differenceInTime, 1000, 1000);
+function pad(value) {
+  return String(value).padStart(2, "0");
+}
 
 function differenceInTime() {
-  // time = targetDate - new Date();
-  time = targetDate - Date.now();
-  // console.log(time);
+  console.log(days, ":", hours, ":", mins, ":", secs);
+}
 
+function getTimeComponent(time) {
   const days = pad(Math.floor(time / (1000 * 60 * 60 * 24)));
 
   const hours = pad(
@@ -55,9 +69,6 @@ function differenceInTime() {
   const mins = pad(Math.floor((time % (1000 * 60 * 60)) / (1000 * 60)));
 
   const secs = pad(Math.floor((time % (1000 * 60)) / 1000));
-  console.log(days, ":", hours, ":", mins, ":", secs);
-}
 
-function pad(value) {
-  return String(value).padStart(2, "0");
+  return { days, hours, mins, secs };
 }
