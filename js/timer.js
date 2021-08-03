@@ -1,11 +1,8 @@
-// new CountdownTimer({
-//   selector: "#timer-1",
-//   targetDate: new Date("Jul 17, 2019"),
-// });
 class CountdownTimer {
   constructor({ selector, targetDate }) {
     this.selector = selector;
     this.targetDate = targetDate;
+    this.intervalId = null;
     this.refs = {
       secs: document.querySelector('span[data-value="secs"]'),
       mins: document.querySelector('span[data-value="mins"]'),
@@ -14,11 +11,15 @@ class CountdownTimer {
     };
   }
   start() {
-    setInterval(
+    this.intervalId = setInterval(
       () => {
-        const restTime = this.targetDate - Date.now();
-        const { days, hours, mins, secs } = this.getTimeComponent(restTime);
-        console.log(days, ":", hours, ":", mins, ":", secs);
+        const timeLeft = this.targetDate - Date.now();
+
+        if (timeLeft <= 0) {
+          clearInterval(this.intervalId);
+        }
+        const { days, hours, mins, secs } = this.getTimeComponent(timeLeft);
+        // console.log(days, ":", hours, ":", mins, ":", secs);
         this.refs.days.textContent = days;
         this.refs.hours.textContent = hours;
         this.refs.mins.textContent = mins;
@@ -42,6 +43,7 @@ class CountdownTimer {
 
     return { days, hours, mins, secs };
   }
+  // Функция добавления нуля спереди
   pad(value) {
     return String(value).padStart(2, "0");
   }
