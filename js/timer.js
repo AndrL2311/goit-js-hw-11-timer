@@ -1,14 +1,15 @@
 class CountdownTimer {
   constructor({ selector, targetDate }) {
-    this.selector = selector;
+    this.timerRefs = document.querySelector(selector);
     this.targetDate = targetDate;
     this.intervalId = null;
     this.refs = {
-      secs: document.querySelector('span[data-value="secs"]'),
-      mins: document.querySelector('span[data-value="mins"]'),
-      hours: document.querySelector('span[data-value="hours"]'),
-      days: document.querySelector('span[data-value="days"]'),
+      secs: this.timerRefs.querySelector('span[data-value="secs"]'),
+      mins: this.timerRefs.querySelector('span[data-value="mins"]'),
+      hours: this.timerRefs.querySelector('span[data-value="hours"]'),
+      days: this.timerRefs.querySelector('span[data-value="days"]'),
     };
+    this.start();
   }
   start() {
     this.intervalId = setInterval(
@@ -51,7 +52,13 @@ class CountdownTimer {
 
 const timer = new CountdownTimer({
   selector: "#timer-1",
-  targetDate: new Date("Aug 31, 2021"),
+  targetDate: new Date("Sep 1, 2021"),
 });
 
-timer.start();
+const timer2 = new CountdownTimer({
+  selector: "#timer-2",
+  targetDate: new Date("Jan 1, 2022"),
+});
+
+// timer.start();
+// timer2.start();
